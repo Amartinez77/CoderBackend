@@ -22,9 +22,12 @@ class Usuario {
     console.log(this.libros)
   }
   getBookNames() {
-    const filterarray = this.libros.map(({ nombre }) => ({ nombre })
+    const filterarray = this.libros.map(({ nombre }) => ( nombre )
     )
     console.log(filterarray)
+
+
+
   }
 }
 
