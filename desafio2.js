@@ -87,8 +87,29 @@ class Contenedor {
           throw "no existe el elemento buscado";
         } else {
           const arrayFiltrado = data.filter((item) => item.id !== nro);
-          
+          await fs.promises.writeFile(
+            this.filename,
+            JSON.stringify(arrayFiltrado, null, 2)
+          );
+          return arrayFiltrado;
         }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  deleteAll = async () => {
+    try {
+      if (fs.existsSync(this.filename)) {
+        let nuevoArray = [];
+        await fs.promises.writeFile(
+          this.filename,
+          JSON.stringify(nuevoArray, null, 2)
+        );
+        return nuevoArray;
+      } else {
+        throw "no se encuentra el archivo";
       }
     } catch (error) {
       console.log(error);
@@ -119,13 +140,14 @@ let producto3 = {
 };
 
 metodos = async () => {
-  // await contenedor.save(producto);
-  // await contenedor.save(producto2);
-  // await contenedor.save(producto3);
+  await contenedor.save(producto);
+  await contenedor.save(producto2);
+  await contenedor.save(producto3);
 
   console.log(await contenedor.getAll());
-  console.log(await contenedor.getById(2));
-  console.log(await contenedor.deleteById(5));
+  //console.log(await contenedor.getById(2));
+  // console.log(await contenedor.deleteById(1));
+  //console.log(await contenedor.deleteAll());
 };
 
 metodos();
