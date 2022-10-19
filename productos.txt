@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "brand": "Gaseosa Coca-cola",
+    "price": 100,
+    "liquidVol": "353ml",
+    "imagePath": "https://danor.com.ar/wp-content/uploads/25007.jpg"
+  },
+  {
+    "id": 2,
+    "brand": "Gaseosa Sprite",
+    "price": 100,
+    "liquidVol": "310ml",
+    "imagePath": "https://arikiosco.tiendalite.com/images/products/500/55766449-866.jpg"
+  },
+  {
+    "id": 3,
+    "brand": "Speed",
+    "price": 150,
+    "liquidVol": "250ml",
+    "imagePath": "https://http2.mlstatic.com/D_NQ_NP_791832-MLA31356460677_072019-O.jpg"
+  }
+]

@@ -25,9 +25,6 @@ class Usuario {
     const filterarray = this.libros.map(({ nombre }) => ( nombre )
     )
     console.log(filterarray)
-
-
-
   }
 }
 
