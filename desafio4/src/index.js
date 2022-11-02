@@ -31,16 +31,28 @@ let productos = [
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(express.static(path.join(__dirname, "../public")));
+
 app.get("/", (req, res) => {
-  res.send(productos);
+  res.send(index.html);
 });
 
 routerProductos.get("/productos", (req, res) => {
   res.send(productos);
 });
 
-routerProductos.get("/productos/id", (req, res) => {
-  res.json(productos.id);
+routerProductos.get("/productos/:id", (req, res) => {
+  console.log(req.params.id);
+  const { id } = req.params;
+  console.log(id);
+  console.log(productos.length);
+  if (id > productos.length) {
+    res.json({ error: "id inexistente" });
+  } else {
+    let encontrado = productos.find((item) => item.id == id);
+    console.log(encontrado);
+    res.json(encontrado);
+  }
 });
 
 routerProductos.post("/productos", (req, res) => {
@@ -56,13 +68,31 @@ routerProductos.post("/productos", (req, res) => {
   }
 });
 
-routerProductos.put("/productos/id", (req, res) => {
-  res.json(productos.id);
+routerProductos.put("/productos/:id", (req, res) => {
+  const { id } = req.params;
+  const { title, price, thumbnail } = req.body;
+  if (title && price && thumbnail) {
+    productos.forEach(function (producto) {
+      if (producto.id == id) {
+        producto.title = title;
+        producto.price = price;
+        producto.thumbnail = thumbnail;
+      }
+    });
+    res.json(productos);
+  }
 });
 
 routerProductos.delete("/productos/:id", (req, res) => {
-  console.log(req.params)
-  res.send('producto eliminado')
+  console.log(req.params.id);
+  if (req.params.id > productos.length) {
+    res.json({ error: "id inexistente" });
+  } else {
+    const filtrado = productos.filter((item) => item.id != req.params.id);
+    console.log(filtrado);
+    productos = filtrado;
+    res.send("producto eliminado");
+  }
 });
 
 app.use("/api", routerProductos);
