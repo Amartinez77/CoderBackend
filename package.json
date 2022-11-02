@@ -1,26 +1,52 @@
 {
-  "type": "module",
+
   "name": "backend",
+
   "version": "1.0.0",
+
   "description": "",
+
   "main": "ejer.js",
+
   "scripts": {
+
     "test": "echo \"Error: no test specified\" && exit 1"
+
   },
+
   "repository": {
+
     "type": "git",
+
     "url": "git+https://github.com/Amartinez77/CoderBackend.git"
+
   },
+
   "keywords": [],
+
   "author": "",
+
   "license": "ISC",
+
   "bugs": {
+
     "url": "https://github.com/Amartinez77/CoderBackend/issues"
+
   },
+
   "homepage": "https://github.com/Amartinez77/CoderBackend#readme",
+
   "dependencies": {
+
     "cors": "^2.8.5",
+
     "express": "^4.18.2",
+
+    "pug": "^3.0.2",
+
     "websocket": "^1.0.34"
+
   }
+
 }
+
