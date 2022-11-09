@@ -7,10 +7,20 @@ const app = express();
 
 let productos = [
   {
-    nombre: 'pepe',
-    precio: 55,
-    url:'www.google.com'
-},
+    nombre: "pizza",
+    precio: 550,
+    url: "https://www.svgrepo.com/show/29781/pizza.svg",
+  },
+  {
+    nombre: "hamburguesa",
+    precio: 800,
+    url: "https://www.svgrepo.com/show/67647/hamburger.svg",
+  },
+  {
+    nombre: "gaseosa",
+    precio: 600,
+    url: "https://www.svgrepo.com/show/11280/soda.svg",
+  },
 ];
 
 // const handlebarsConfig = {

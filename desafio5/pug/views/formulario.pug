@@ -1,0 +1,25 @@
+extends layout.pug 
+
+block formu 
+    div(class="container mt-3")
+      div(class="jumbotron")
+        h1(class="text-bg-primary")="Ingrese datos"
+        br
+
+        form(action="/productos" method="post") 
+
+          div(class="form-group")
+            label(for="nombre"): b="Nombre" 
+            input(id="nombre" class="form-control" type="text" name="nombre")
+
+          div(class="form-group")
+            label(for="precio"): b="Precio" 
+            input(id="precio" class="form-control" type="number" name="precio")
+
+          div(class="form-group")
+            label(for="url"): b="Url" 
+            input(id="url" class="form-control" type="text" name="url")
+
+          button(class="btn btn-success mt-3 mb-5")="enviar"
+
+      button(type="button" class="btn btn-primary" onclick="window.location.href='/productos'")="ver lista de productos"

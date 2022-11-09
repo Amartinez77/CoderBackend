@@ -1,5 +1,6 @@
 <h1>Example App: Home</h1>
 
+{{#if productos}}
 <div class="table-responsive">
     <h3>Vista productos</h3>
     <table class="table table-dark">
@@ -17,7 +18,7 @@
                 {{precio}}
             </td>
             <td>
-                <img src={{url}} alt="Imagen del producto" width="100px">
+                <img src={{url}} alt="Imagen del producto" width="30" height="30">
             </td>
         </tr>
         {{/each}}
@@ -25,7 +26,10 @@
 
     <button type="button" class="btn btn-primary" onclick="window.location.href='/'">Volver al formulario</button>
 </div>
-
+{{else}}
+<h3 class="alert alert-danger">No se encontraron productos</h3>
+<button type="button" class="btn btn-primary" onclick="window.location.href='/'">Volver al Home</button>
+    {{/if}}
 
 
 

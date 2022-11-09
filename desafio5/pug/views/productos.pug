@@ -1,0 +1,18 @@
+extends layout.pug 
+
+
+block mostrar
+  h1(class="text-bg-success")="lista de productos"
+  div(class="table-responsive") 
+    table(class="table table-dark")
+      tr 
+        th="nombre"
+        th="precio"
+        th="url"
+      tr 
+        each val in productos.length ? productos : ['There are no values']
+          tr 
+            td=val.nombre
+            td=val.precio 
+            td: img(src=val.url alt="Imagen del producto" width="30" height="30")
+    button(type="button" class="btn btn-primary" onclick="window.location.href='/'")="Volver al home"
