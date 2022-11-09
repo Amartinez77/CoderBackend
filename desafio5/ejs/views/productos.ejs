@@ -1,0 +1,38 @@
+<%- include('./encabezado')-%>
+
+<body>
+  <% if(productos.length> 0){ %>
+    <div class="table-responsive">
+      <table class="table table-dark">
+        <tr style="color: yellow;">
+          <th>Nombre</th>
+          <th>Apellido</th>
+          <th>Edad</th>
+        </tr>
+        <%productos.forEach(function(producto) {%>
+          <tr>
+            <td>
+              <%=producto.nombre%>
+            </td>
+            <td>
+              <%=producto.precio%>
+            </td>
+            <td>
+              <img src=<%=producto.url%> width="30" height="30" alt="">
+              
+            </td>
+          </tr>
+          <%});%>
+      </table>
+      <button class="btn btn-primary" onclick="window.location.href='/'">Volver al home</button>
+    </div>
+    <% } else{ %>
+      <h3 class="alert alert-danger">no se encontraron datos</h1>
+        <button class="btn btn-primary" onclick="window.location.href='/'">Volver al home</button>
+        <% } %>
+</body>
+
+
+
+
+<%- include('./pie')-%>

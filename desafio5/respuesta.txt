@@ -1,0 +1,5 @@
+ - handlebars: es el mas facil de usar, es código html con algunas modificaciones. es el que voy a utilizar de ahora en adelante
+
+ -pug: la documentación es dificil de entender, y el tema de la indentación se vuelve complicado cuando los templates son muy grandes
+
+ - ejs: la documentación es excelente, la mejor de los 3, es mi 2da opción de motor de plantillas. se me complico usa la sintaxis (<% , <%- )
