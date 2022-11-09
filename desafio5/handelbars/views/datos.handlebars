@@ -1,0 +1,21 @@
+<h1>Example App: Home</h1>
+
+
+
+
+    <ul>
+    <li>{{productos.nombre}}</li>
+    <li>{{precio}}</li>
+    <li>{{url}}</li>
+</ul>
+
+
+<ul class="productos_list">
+  {{#each productos}}
+    <li>{{this}}</li>
+  {{/each}}
+</ul>
+
+{{#with productos}}
+{{nombre}} {{precio}}
+{{/with}}

@@ -104,3 +104,6 @@ app
   .on("error", () => {
     console.log("Ha ocurrido un error");
   });
+
+
+module.exports.app = app;

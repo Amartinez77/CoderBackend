@@ -6,11 +6,11 @@ import { engine } from "express-handlebars";
 const app = express();
 
 let productos = [
-  {
-    nombre: 'pepe',
-    precio: 55,
-    url:'www.google.com'
-}
+//   {
+//     nombre: 'pepe',
+//     precio: 55,
+//     url:'www.google.com'
+// },
 ];
 
 // const handlebarsConfig = {
@@ -33,13 +33,15 @@ app.get("/", (req, res) => {
 
 app.get('/productos', (req, res) => {
 
-  res.render("datos", { productos: JSON.stringify(productos) });
+  res.render("datos", { productos });
+  console.log(productos)
+  
   //res.render("datos", { productos })
 })
 
 app.post("/productos", (req, res) => {
   productos.push(req.body);
-  console.log(productos);
+  //console.log(productos);
   res.redirect("/");
 });
 
