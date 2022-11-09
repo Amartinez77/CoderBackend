@@ -6,11 +6,11 @@ import { engine } from "express-handlebars";
 const app = express();
 
 let productos = [
-//   {
-//     nombre: 'pepe',
-//     precio: 55,
-//     url:'www.google.com'
-// },
+  {
+    nombre: 'pepe',
+    precio: 55,
+    url:'www.google.com'
+},
 ];
 
 // const handlebarsConfig = {
@@ -19,13 +19,18 @@ let productos = [
 //   defaultLayout: "index.handlebars",
 // };
 //engine()
-app.engine("handlebars", engine({ defaultLayout: "index.handlebars" }));
+
+//, layoutsDir: '/views/layouts'
+
+app.engine("handlebars", engine({ defaultLayout: "index.handlebars", extname: '.handlebars'  }));
 
 app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "handlebars");
 
 app.set("views", "../views");
+
+//app.use(express.json());
 
 app.get("/", (req, res) => {
   res.render('formulario')
@@ -41,7 +46,7 @@ app.get('/productos', (req, res) => {
 
 app.post("/productos", (req, res) => {
   productos.push(req.body);
-  //console.log(productos);
+  console.log(productos);
   res.redirect("/");
 });
 
