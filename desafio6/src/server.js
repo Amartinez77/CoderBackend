@@ -2,21 +2,12 @@ const express = require("express");
 const { Server: HttpServer } = require("http");
 const { Server: IOServer } = require("socket.io");
 const { engine } = require("express-handlebars");
-
+const fs = require("fs");
 const app = express();
 const httpServer = new HttpServer(app);
 const io = new IOServer(httpServer);
 
-const messages = [
-  {
-    author: "Juan",
-    text: "hola que tal?",
-  },
-  {
-    author: "Pedro",
-    text: "muy bien, vos?",
-  },
-];
+
 
 let productos = [
   {
@@ -40,7 +31,7 @@ app.engine(
   "handlebars",
   engine({
     defaultLayout: "index.handlebars",
-    extname: ".handlebars"
+    extname: ".handlebars",
   })
 );
 
@@ -53,32 +44,54 @@ app.set("views", "./views");
 //app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.render("formulario");
+  res.render("formulario", { productos });
+  // res.render("productos", {productos})
 });
 
-app.get("/productos", (req, res) => {
-  res.render("datos", { productos });
-  console.log(productos);
+  
 
-  //res.render("datos", { productos })
-});
 
-app.post("/productos", (req, res) => {
-  productos.push(req.body);
-  console.log(productos);
-  res.redirect("/");
-});
+app.use(express.static("views"));
 
-app.use(express.static("public"));
+
 
 io.on("connection", (socket) => {
   console.log("Nuevo cliente conectado!");
-  socket.emit("messages", messages);
+  //socket.emit("messages", messages);
 
-  socket.on("new-message", (data) => {
-    messages.push(data);
-    io.sockets.emit("messages", messages);
+
+
+
+  fs.promises.readFile("./chat.txt", "utf-8")
+    .then((data) => {
+      console.log(data)
+      io.sockets.emit("messages", JSON.parse(data));
   });
+
+  //io.sockets.emit("productos", productos);
+
+    socket.emit("productos", productos);
+
+  socket.on("newProducto", (producto) => {
+    productos.push(producto);
+    console.log(producto)
+    io.sockets.emit("productos", productos);
+    //io.emit("newProductos", productos)
+  });
+
+
+socket.on("newMessage", async (newMessage) => {
+  let data = await fs.promises.readFile("./chat.txt", "utf-8");
+  let messages = JSON.parse(data);
+  messages.push(newMessage);
+  fs.writeFileSync("./chat.txt", JSON.stringify(messages));
+  io.sockets.emit("messages", messages);
+});
+
+  // socket.on("new-message", (data) => {
+  //   messages.push(data);
+  //   io.sockets.emit("messages", messages);
+  // });
 });
 
 const PORT = 8080;

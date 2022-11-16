@@ -3,9 +3,9 @@
             <h1 style="color:blue;">Ingrese datos</h1>
             <br>
 
-            <form action="/productos" method="post">
+            <form id="agregarProductos">
                 
-                <div class="form-group">
+                <div class="form-group" >
                     <label for="nombre"><b>Nombre</b></label>
                     <input id="nombre" class="form-control" type="text" name="nombre">
                 </div>
@@ -20,13 +20,63 @@
                     <input id="url" class="form-control" type="text" name="url">
                 </div>
 
-                <button class="btn btn-success mt-3 mb-5">Enviar</button>
+                <input class='btn btn-success' type='submit' value='Enviar' />
             </form>
 
 
         </div>
         <h3>las imagenes fueron sacadas de <span><a href="https://www.svgrepo.com/" target="_blank">Svg-repo</a></span></h3>
-        <button type="button" class="btn btn-primary" onclick="window.location.href='/productos'">ver lista de productos</button>
-    </div>
+        
+</div>
 
-    {{!-- <div>{{}}</div> --}}
+
+<h3>Example App: Home</h3>
+
+{{#if productos}}
+<div class="table-responsive">
+    <h3>Vista productos</h3>
+    <table class="table table-dark">
+      <thead>
+        <tr style="color: yellow;">
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>URL imagen</th>
+        </tr>
+        </thead>
+        {{!-- {{#each productos}} --}}
+        {{!-- <tr>
+            <td>
+                {{nombre}}
+            </td>
+            <td>
+                {{precio}}
+            </td>
+            <td>
+                <img src={{url}} alt="Imagen del producto" width="30" height="30">
+            </td>
+        </tr> --}}
+        <tbody id='table-products'></tbody>
+        {{!-- {{/each}} --}}
+      
+    </table>
+
+    <button type="button" class="btn btn-primary" onclick="window.location.href='/'">Volver al formulario</button>
+</div>
+{{else}}
+<h3 class="alert alert-danger">No se encontraron productos</h3>
+<button type="button" class="btn btn-primary" onclick="window.location.href='/'">Volver al Home</button>
+    {{/if}}
+
+    <section>
+      <form id="chatForm">
+    <input type="text" id="username" placeholder="Tu Nombre">
+    <input type="text" id="texto" placeholder="Cuentanos algo...">
+    <input type="submit" value="enviar">
+  </form>
+  <div id="messages"></div>
+    </section>
+
+
+
+
+
