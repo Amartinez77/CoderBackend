@@ -1,0 +1,32 @@
+<div class="container mt-3">
+        <div class="jumbotron">
+            <h1 style="color:blue;">Ingrese datos</h1>
+            <br>
+
+            <form action="/productos" method="post">
+                
+                <div class="form-group">
+                    <label for="nombre"><b>Nombre</b></label>
+                    <input id="nombre" class="form-control" type="text" name="nombre">
+                </div>
+
+                <div class="form-group">
+                    <label for="precio"><b>precio</b></label>
+                    <input id="precio" class="form-control" type="number" name="precio">
+                </div>            
+
+                <div class="form-group">
+                    <label for="url"><b>URL</b></label>
+                    <input id="url" class="form-control" type="text" name="url">
+                </div>
+
+                <button class="btn btn-success mt-3 mb-5">Enviar</button>
+            </form>
+
+
+        </div>
+        <h3>las imagenes fueron sacadas de <span><a href="https://www.svgrepo.com/" target="_blank">Svg-repo</a></span></h3>
+        <button type="button" class="btn btn-primary" onclick="window.location.href='/productos'">ver lista de productos</button>
+    </div>
+
+    {{!-- <div>{{}}</div> --}}
