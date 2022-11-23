@@ -46,9 +46,9 @@ notes.post('/', async (req, res) => {
   console.log(req.query)
   console.log(req.params)
   if (check=='on') {
-    const { name, price } = req.body;
+    const { name, price, desc, codigo, url, stock } = req.body;
       console.log(req.body)
-      const product = new Product(name, price);
+      const product = new Product(name, price, desc, codigo, url, stock);
       await product.save();
       res.redirect('/api')
   } else {
@@ -61,10 +61,40 @@ notes.post('/', async (req, res) => {
 });
 
 // ACTUALIZAR PRODUCTO POR ID
-notes.put('/actualizar/:id?', (req, res) => {
-  
+notes.put('/actualizar/:id', async (req, res) => {
+
+  const id = req.params.id;
+
+  console.log(req.body.precio)
+
+  const data = req.body;
+
+  let check = req.body.check
+
+  console.log("esto trae el check" + check)
+
+  if (check) {
+  await Product.update(id, data);
+    
+    res.send('producto actualizado')
+  } else {
+      res.send({
+    error: "999",
+    descripcion: "ruta /actualizar method: PUT no autorizada",
+  });
+  }
+
+ 
+
 })
 
+
+// ELIMINAR PRODUCTO POR ID
+
+notes.get("/leer", async (req, res) => {
+  const pepe = await Product.leer()
+  console.log(pepe)
+})
 
 notes.get('/add', (req, res) => {
   res.render('cargaProductos')

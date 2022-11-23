@@ -12,13 +12,77 @@
   <h2>probando</h2>
 {{#each products}}
 
-    <h2>{{name}}</h2>
-    <h2>{{price}}</h2>
+    <table class="table table-dark">
+        <tr style="color: yellow;">
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>URL imagen</th>
+        </tr>
+
+        <tr>
+            <td>
+                {{name}}
+            </td>
+            <td>
+                {{price}}
+            </td>
+
+            <td>
+                {{desc}}
+            </td>
+
+            <td>
+                {{codigo}}
+            </td>
+
+            <td>
+                {{timestamp}}
+            </td>
+
+            <td>
+                {{id}}
+            </td>
+            <td>
+                <img src={{url}} alt="Imagen del producto" width="30" height="30">
+            </td>
+        </tr>
+
+        <tbody id='tablaProductos'></tbody>
+    </table>
+
+
 
   {{/each}}
 
   {{else}}
-<h2>{{products.price}}</h2>
+
+    <tr>
+            <td>
+                {{products.name}}
+            </td>
+            <td>
+                {{products.price}}
+            </td>
+
+            <td>
+                {{products.desc}}
+            </td>
+
+            <td>
+                {{products.codigo}}
+            </td>
+
+            <td>
+                {{products.timestamp}}
+            </td>
+
+            <td>
+                {{products.id}}
+            </td>
+            <td>
+                <img src={{products.url}} alt="Imagen del producto" width="30" height="30">
+            </td>
+        </tr>
   
 
 {{/if}}

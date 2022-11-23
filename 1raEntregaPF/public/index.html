@@ -29,7 +29,17 @@
 
   <section>
     <h3>Actualizar productos</h3>
-    <input type="number" name="id" id="id">
+    <input type="number" name="id" id="id" placeholder="ingrese ID">
+    <input type="text" id="nameNuevo" name="nameNuevo" placeholder="ingrese el nombre">
+    <input type="number" name="precioNuevo" id="precioNuevo" placeholder="ingrese el precio">
+    <input type="text" id="descNuevo" name="descNuevo" placeholder="Ingresa descripcion" />
+    <input type="text" id="codigoNuevo" name="codigoNuevo" placeholder="Ingresa el codigo" />
+    <input type="text" id="urlNuevo" name="urlNuevo" placeholder="Ingresa direccion de la imagen" />
+    <input type="number" id="stockNuevo" name="stockNuevo" placeholder="Ingresa stock" /><br>
+<div class="form-check form-switch">
+    <input class="form-check-input" type="checkbox" role="switch" id="check" name="check">
+    <label class="form-check-label" for="check">Administrador</label>
+    </div>
     <button id="enviar">Enviar</button>
   </section>
 

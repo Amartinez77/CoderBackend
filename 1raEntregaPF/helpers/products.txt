@@ -1,25 +1,22 @@
 [
   {
-    "name": "parrot",
-    "price": "434345",
-    "id": 1
+    "name": "hamburguesas",
+    "price": "800",
+    "desc": "hambuerguesa completa con papas",
+    "codigo": "0009",
+    "url": "www.burguer.com",
+    "stock": "www.burguer.com",
+    "id": 1,
+    "timestamp": 1669217203160
   },
   {
-    "name": "student",
-    "price": "145",
-    "id": 2
-  },
-  {
-    "name": "unchartedgamefans",
-    "price": "6565656",
-    "id": 3
-  },
-  {
-    "id": 4
-  },
-  {
-    "name": "vaso",
-    "price": "120",
-    "id": 5
+    "name": "papa",
+    "price": "900",
+    "desc": "bolsa de papas",
+    "codigo": "008",
+    "url": "www.papa.com",
+    "stock": "www.papa.com",
+    "id": 2,
+    "timestamp": 1669217231771
   }
 ]
