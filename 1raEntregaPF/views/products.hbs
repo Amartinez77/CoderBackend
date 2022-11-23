@@ -1,0 +1,24 @@
+<div>
+  <h1>estoy en productos hbs</h1>
+</div>
+
+<div>
+  <a href="/">Volver al inicio</a>
+  <br />
+  <h2>productos</h2>
+</div>
+{{#if products.length}}
+
+  <h2>probando</h2>
+{{#each products}}
+
+    <h2>{{name}}</h2>
+    <h2>{{price}}</h2>
+
+  {{/each}}
+
+  {{else}}
+<h2>{{products.price}}</h2>
+  
+
+{{/if}}

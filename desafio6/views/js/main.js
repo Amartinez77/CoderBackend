@@ -55,8 +55,8 @@ const chat = document.getElementById("messages");
 
 const render = messages => {
   //console.log(messages);
-  messages.forEach(message => {
-    if (messages.length > 0) chat.innerHTML = "";
+  messages.forEach((message) => {
+    //if (messages.length > 0) chat.innerHTML = "";
     chat.innerHTML += `
                 <div>
 			<b class="text-primary">${message.author}</b>

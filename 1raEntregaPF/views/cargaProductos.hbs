@@ -1,0 +1,27 @@
+<div>
+  <a href="/">Volver al inicio</a>
+  <br />
+  <h2>¡Publica una nueva nota!</h2>
+</div>
+
+<form action="/api" method="post">
+  <div class="form-check form-switch">
+  
+  <input
+    type="text"
+    id="name"
+    name="name"
+    placeholder="Ingresa el nombre del producto"
+  />
+  <label for="name">nombre</label><br />
+
+  <input type="text" id="price" name="price" placeholder="Ingresa el precio" />
+  <label for="price">precio</label><br />
+
+  
+            <input class="form-check-input" type="checkbox" role="switch" id="check" name="check">
+            <label class="form-check-label" for="check">Administrador</label>
+          
+  <button type="submit">Enviar</button>
+  </div>
+</form>

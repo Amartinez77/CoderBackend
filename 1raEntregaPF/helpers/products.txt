@@ -1,0 +1,25 @@
+[
+  {
+    "name": "parrot",
+    "price": "434345",
+    "id": 1
+  },
+  {
+    "name": "student",
+    "price": "145",
+    "id": 2
+  },
+  {
+    "name": "unchartedgamefans",
+    "price": "6565656",
+    "id": 3
+  },
+  {
+    "id": 4
+  },
+  {
+    "name": "vaso",
+    "price": "120",
+    "id": 5
+  }
+]
