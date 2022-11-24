@@ -1,22 +1,22 @@
 [
   {
-    "name": "hamburguesas",
-    "price": "800",
-    "desc": "hambuerguesa completa con papas",
-    "codigo": "0009",
-    "url": "www.burguer.com",
-    "stock": "www.burguer.com",
-    "id": 1,
-    "timestamp": 1669217203160
-  },
-  {
-    "name": "papa",
+    "name": "sanguches",
     "price": "900",
-    "desc": "bolsa de papas",
-    "codigo": "008",
-    "url": "www.papa.com",
-    "stock": "www.papa.com",
+    "desc": "de miga",
+    "codigo": "0004",
+    "url": "www.sanwi.com",
+    "stock": "www.sanwi.com",
     "id": 2,
     "timestamp": 1669217231771
+  },
+  {
+    "name": "parrot",
+    "price": "434345",
+    "desc": "gaseosa",
+    "codigo": "001",
+    "url": "www.chocle.com",
+    "stock": "5",
+    "id": 2,
+    "timestamp": 1669265064087
   }
 ]

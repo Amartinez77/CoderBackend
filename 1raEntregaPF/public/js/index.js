@@ -1,5 +1,9 @@
 const botonEnviar = document.getElementById("enviar");
 
+
+
+
+//Evento de actualizacion de productos
 botonEnviar.addEventListener('click', e => {
   const id = document.getElementById('id');
   const name = document.getElementById('nameNuevo');
@@ -34,4 +38,46 @@ botonEnviar.addEventListener('click', e => {
   } else {
     throw('debe ingresar algo')
   }
+})
+
+
+//evento de eliminar productos
+
+const delEnviar = document.getElementById('delEnviar');
+//const del = document.getElementById('del');
+
+
+
+delEnviar.addEventListener('click', e => {
+  const del = document.getElementById("del");
+  const checkD = document.getElementById("checkD")
+
+  const data2 = {
+    del: del.value,
+    check: checkD.checked
+}
+
+  fetch(`http://localhost:8080/api/eliminar/${data2.del}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data2),
+  });
+
+
+})
+
+// evento crear carrito
+
+const cart = document.getElementById('cart')
+
+cart.addEventListener('click', e => {
+  fetch("http://localhost:8080/api/cart", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    }
+    
+  });
 })

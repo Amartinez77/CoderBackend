@@ -10,50 +10,66 @@
     integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
 </head>
 
-<body>
-  <h1>probando</h1>
+  <body>
+    <h1>probando</h1>
 
 
-  <section>
-    <h3><a href="/api/add">Cargar nuevo producto</a></h3>
-    <h3><a href="/api">Todas las notas</a></h3>
+    <section>
+      <h3><a href="/api/add">Cargar nuevo producto</a></h3>
+      <h3><a href="/api">Todas las notas</a></h3>
+      
+      <h3>si desea consultar los productos ingrese nro de ID / para listar todos los productos no ingresa 0</h3>
+      <form action="/api/consulta" method="get">
+        <input type="number" id="number" name="number" placeholder="ingrese ID si no lo conoce ingrese 0">
+            
+        <button type="submit">enviar</button>
+      </form>
+    </section>
+
+
+    <section>
+      <h3>Actualizar productos</h3>
+      <input type="number" name="id" id="id" placeholder="ingrese ID">
+      <input type="text" id="nameNuevo" name="nameNuevo" placeholder="ingrese el nombre">
+      <input type="number" name="precioNuevo" id="precioNuevo" placeholder="ingrese el precio">
+      <input type="text" id="descNuevo" name="descNuevo" placeholder="Ingresa descripcion" />
+      <input type="text" id="codigoNuevo" name="codigoNuevo" placeholder="Ingresa el codigo" />
+      <input type="text" id="urlNuevo" name="urlNuevo" placeholder="Ingresa direccion de la imagen" />
+      <input type="number" id="stockNuevo" name="stockNuevo" placeholder="Ingresa stock" /><br>
+      <div class="form-check form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="check" name="check">
+      <label class="form-check-label" for="check">Administrador</label>
+      </div>
+      <button id="enviar">Enviar</button>
+    </section>
+
+    <section>
+      <h3>eliminar por ID</h3>
+      <input type="number" name="del" id="del" placeholder="ingrese ID a eliminar">
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" role="switch" id="checkD" name="checkD">
+        <label class="form-check-label" for="check">Administrador</label>
+      </div>
+      <button id="delEnviar">enviar</button>
+    </section>
+
     
-    <h3>si desea consultar los productos ingrese nro de ID / para listar todos los productos no ingresa 0</h3>
-    <form action="/api/consulta" method="get">
-      <input type="number" id="number" name="number" placeholder="ingrese ID si no lo conoce ingrese 0">
-          
-      <button type="submit">enviar</button>
-    </form>
-  </section>
 
-
-  <section>
-    <h3>Actualizar productos</h3>
-    <input type="number" name="id" id="id" placeholder="ingrese ID">
-    <input type="text" id="nameNuevo" name="nameNuevo" placeholder="ingrese el nombre">
-    <input type="number" name="precioNuevo" id="precioNuevo" placeholder="ingrese el precio">
-    <input type="text" id="descNuevo" name="descNuevo" placeholder="Ingresa descripcion" />
-    <input type="text" id="codigoNuevo" name="codigoNuevo" placeholder="Ingresa el codigo" />
-    <input type="text" id="urlNuevo" name="urlNuevo" placeholder="Ingresa direccion de la imagen" />
-    <input type="number" id="stockNuevo" name="stockNuevo" placeholder="Ingresa stock" /><br>
-<div class="form-check form-switch">
-    <input class="form-check-input" type="checkbox" role="switch" id="check" name="check">
-    <label class="form-check-label" for="check">Administrador</label>
-    </div>
-    <button id="enviar">Enviar</button>
-  </section>
+    <section>
+      <h3>
+        carrito
+      </h3>
+      <button id="cart">crear carrito</button>
+    </section>
 
 
 
-
-
-
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
-    integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
-    integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
-  <script src="./js/index.js"></script>
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+      integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.min.js"
+      integrity="sha384-IDwe1+LCz02ROU9k972gdyvl+AESN10+x7tBKgc9I5HFtuNz0wWnPclzo6p9vxnk" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js"></script>
+    <script src="./js/index.js"></script>
+  </body>
 
 </html>

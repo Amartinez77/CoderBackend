@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const { engine } = require("express-handlebars");
 
 const notes = require("./routes/notes.routes")
+const routerCarts = require("./routes/routerCart")
 
 
 
@@ -39,7 +40,8 @@ server.use(morgan('dev'));
 
 // RUTAS
 
-server.use("/api", notes)
+server.use("/api", notes);
+server.use("/api/cart", routerCarts);
 
 /* ------------------------------------------------------ */
 /* Server Listen */
