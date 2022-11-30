@@ -1,86 +1,63 @@
 const fs = require("fs");
 const path = require("path");
 
-
 class Cart {
   static file = path.join(__dirname, "carrito.txt");
 
-  static async getAll() {
-    try {
-      if (fs.existsSync(Cart.file)) {
-        const json = await fs.promises.readFile(Cart.file, "utf-8");
-        const data = JSON.parse(json);
-        return data;
-      } else {
-        await fs.promises.writeFile(Cart.file, "[]", "utf-8");
-        console.log({ Msg: "archivo creado" });
-        return [];
-      }
-    } catch (error) {
-      console.log("error");
-    }
-  }
+  static async obtenerTodos() {
+    // const fileContent = await fs.promises.readFile(Cart.file,    "utf-8"
+    // );
 
-  async save(obj) {
-    // try {
-    //   const data = await Cart.getAll();
-    //   this.id = data.length + 1;
-    //   this.timestamp = Date.now();
-    //   data.push(this);
-    //   await fs.promises.writeFile(
-    //     Cart.file,
-    //     JSON.stringify(data, null, 2),
-    //     "utf-8"
-    //   );
-    // } catch (error) {
-    //   console.log(error);
-    // }
-    try {
-      obj.id = await this.generateId();
-      obj.timestamp = Date.now();
-      this.objects.push(obj);
-      this.writeData();
-      return obj.id;
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
-  static async leer() {
-    try {
-      const result = await fs.promises.readFile(Cart.file, "utf-8");
-      const objeto = JSON.parse(result);
-      console.log(objeto);
-      return objeto;
-    } catch (error) {
-      console.log(error);
+    if (fs.existsSync(Cart.file, "utf-8")) {
+      console.log("si existe");
+      const json = await fs.promises.readFile(Cart.file, "utf-8");
+      const data = JSON.parse(json);
+      return data;
+    } else {
+      console.log("no existe");
+      await fs.promises.writeFile(Cart.file, "[]", "utf-8");
+      console.log({ Msg: "archivo creado" });
       return [];
     }
+
+    //console.log(fileContent)
+
+    //return fileContent;
   }
 
-  async writeData() {
-    await fs.promises.writeFile(
-      Cart.file,
-      JSON.stringify(this.objects, null, 2)
-    );
-  }
+  static async getById() {
+    if (fs.existsSync(Cart.file)) {
+      const result = await fs.promises.readFile(Cart.file, "utf-8");
+      let data = JSON.parse(result);
+      const found = data.find((element) => element.id == nro);
 
-  //Genera ID
-  generateId() {
-    try {
-      if (this.objects.length === 0) return 1;
-      return this.objects[this.objects.length - 1].id + 1;
-    } catch (err) {
-      console.log(err);
+      if (found == undefined) {
+        //return (undefined)
+        throw "no se encuentra elemento";
+      } else {
+        //console.log(found)
+        return found;
+      }
     }
   }
 
-  constructor(fileName) {
-    this.fileName = Cart.file;
-    this.objects = this.leer();
+  static async save(obj, prod) {
+    obj.push(prod);
+    obj[obj.length - 1].id = obj.length;
+    //console.log(data)
+    await fs.promises.writeFile(
+      Cart.file,
+      JSON.stringify(obj, null, 2),
+      "utf-8"
+    );
+
+    return obj[obj.length - 1].id;
+  }
+
+  constructor() {
+    this.id;
+    this.productos;
   }
 }
-
-
 
 module.exports = Cart;

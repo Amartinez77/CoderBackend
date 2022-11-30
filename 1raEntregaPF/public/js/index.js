@@ -1,3 +1,5 @@
+
+
 const botonEnviar = document.getElementById("enviar");
 
 
@@ -73,11 +75,47 @@ delEnviar.addEventListener('click', e => {
 const cart = document.getElementById('cart')
 
 cart.addEventListener('click', e => {
+
+  const cart= document.getElementById('nombreCarrito')
+  
+  const carrito = {
+    nombre: cart.value,
+    timestamp: Date.now(),
+    productos: [],
+    id:0
+  }
+
+  
+
   fetch("http://localhost:8080/api/cart", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-    }
+    },
+    body: JSON.stringify(carrito)
     
   });
 })
+
+
+//evento agregar productos al carrito por id
+
+// const btnEnviar = document.getElementById('botonCart');
+
+// btnEnviar.addEventListener('click', e => {
+
+//   const id = document.getElementById('idCart');
+
+//   const data = {
+//     id: id.value
+//   }
+
+//   fetch(`http://localhost:8080/api/cart/add/${data.id}`, {
+//     method: "GET",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+
+//   });
+
+// })
