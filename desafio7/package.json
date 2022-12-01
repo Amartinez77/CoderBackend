@@ -2,7 +2,7 @@
   "name": "desafio7",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "container.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -13,6 +13,7 @@
     "express": "^4.18.2",
     "express-handlebars": "^6.0.6",
     "knex": "^2.3.0",
+    "mysql": "^2.18.1",
     "mysql2": "^2.3.3",
     "socket.io": "^4.5.4",
     "sqlite3": "^5.1.2"
