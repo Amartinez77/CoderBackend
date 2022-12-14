@@ -1,5 +1,5 @@
 const admin = require("firebase-admin");
-const serviceAccount = require("../segunda-entrega-d2c67-firebase-adminsdk-3vy4j-84da86b190.json");
+const serviceAccount = require("../segunda-entrega-1aaae-firebase-adminsdk-9n903-fb6a0030ac.json");
 admin.initializeApp({ credential: admin.credential.cert(serviceAccount) });
 const { getFirestore, doc, getDoc } = require("firebase-admin/firestore");
 
