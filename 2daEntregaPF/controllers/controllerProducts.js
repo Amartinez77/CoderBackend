@@ -1,5 +1,7 @@
-// const Products = require('../controllers/containerProducts.js');
-const Products = require("../controllers/containerFirebase.js");
+
+// comentar  y descomentar , para usar Firebase o MongoDB
+const Products = require('../controllers/containerProducts.js');
+//const Products = require("../controllers/containerFirebase.js");
 
 const products = new Products();
 

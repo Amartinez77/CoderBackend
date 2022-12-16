@@ -1,5 +1,6 @@
+require('dotenv').config()
 const express = require("express");
-const { connect } = require("mongoose");
+const { mongoose } = require("mongoose");
 const routerProducts = require("./routes/routerProducts.js");
 const routerCarts = require("./routes/routerCarts.js");
 
@@ -20,9 +21,26 @@ app.use("*", (req, res) => {
   });
 });
 
+
+
+
+
+
 const server = app.listen(PORT, async () => {
-  // await connect('mongodb://localhost:27017/products');
+  
   console.log(`Server running on PORT ${PORT}`);
+  
+  //comentar mongoose para usar Firebase, ademas comentar en controllerProducts.js - Products 
+  mongoose.set("strictQuery", false)
+  mongoose.connect(
+  `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.crzm5b3.mongodb.net/baseTest`,
+  {
+    serverSelectionTimeoutMS: 5000,
+    }
+  
+  
+);
+console.log("Base de datos conectada");
 });
 
 server.on("error", (err) => console.log(err));
