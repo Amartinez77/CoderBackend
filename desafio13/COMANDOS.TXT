@@ -1,0 +1,44 @@
+NODEMON
+    FORK
+    nodemon server.js -p 8080   // entra a FORK por default
+    
+    CLUSTER
+    nodemon server.js -p 8081 -m CLUSTER
+
+
+FOREVER
+    FORK
+    forever start server.js -p 8081 -m FORK
+    o sin el -m
+    forever start server.js -p 8081 
+
+    CLUSTER
+    forever start server.js -p 8081 -m CLUSTER
+
+    forever list 
+    forever logs server.js
+
+
+  PM2
+  
+    pm2 start server.js --name="Server fork" --watch -- -p 8080 
+
+    CLUSTER
+    pm2 start server.js --name="Server cluster" --watch -i max -- -p 8082 -m CLUSTER
+    
+
+    pm2 list
+    pm2 logs
+
+
+* para que funcione el proyecto lo que hice fue lo siguiente:
+
+- C:\Users\Ariel\Desktop\nginx-1.23.3     // esta es la carpeta donde esta instalado nginx
+
+- dentro de esa carpeta cree una carpeta llamada " NginxNode "
+
+- dentro de esa carpeta instale el proyecto completo y ahi ejecute  - npm i 
+
+- reemplaze el archivo "nginx.conf" por el que esta dentro de la carpeta NginxConf \ nginx.conf
+
+** deje una carpeta con capturas de pantalla.
