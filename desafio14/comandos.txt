@@ -1,0 +1,10 @@
+node --prof server.js
+
+curl -X GET "http://localhost:8080/api/info"
+
+artillery quick --count 50 -n 20 "http://localhost:8080/api/info" > result_bloq.txt
+
+artillery quick --count 50 -n 20 "http://localhost:8080/api/info" > result_nobloq.txt
+
+node --prof-process bloq-v8.log > result_prof-bloq.txt
+node --prof-process nobloq-v8.log > result_prof-nobloq.txt

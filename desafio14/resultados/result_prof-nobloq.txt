@@ -1,0 +1,55 @@
+Statistical profiling result from nobloq-v8.log, (106680 ticks, 0 unaccounted, 0 excluded).
+
+ [Shared libraries]:
+   ticks  total  nonlib   name
+  105725   99.1%          C:\Windows\SYSTEM32\ntdll.dll
+    909    0.9%          C:\Program Files\nodejs\node.exe
+     14    0.0%          C:\Windows\System32\KERNELBASE.dll
+      5    0.0%          C:\Windows\System32\KERNEL32.DLL
+
+ [JavaScript]:
+   ticks  total  nonlib   name
+      3    0.0%   11.1%  LazyCompile: *deserializeObject C:\github\backend\desafio14\node_modules\bson\lib\parser\deserializer.js:65:27
+      2    0.0%    7.4%  LazyCompile: *noop node:internal/util/debuglog:47:14
+      2    0.0%    7.4%  Function: ^processTimers node:internal/timers:487:25
+      2    0.0%    7.4%  Function: ^listOnTimeout node:internal/timers:507:25
+      1    0.0%    3.7%  LazyCompile: *writeOrBuffer node:internal/streams/writable:365:23
+      1    0.0%    3.7%  LazyCompile: *slice node:buffer:594:12
+      1    0.0%    3.7%  LazyCompile: *now C:\github\backend\desafio14\node_modules\mongodb\lib\utils.js:537:13
+      1    0.0%    3.7%  LazyCompile: *normalize node:path:304:12
+      1    0.0%    3.7%  LazyCompile: *emitBeforeScript node:internal/async_hooks:510:26
+      1    0.0%    3.7%  LazyCompile: *Module._load node:internal/modules/cjs/loader:757:24
+      1    0.0%    3.7%  LazyCompile: *Long.isLong C:\github\backend\desafio14\node_modules\bson\lib\long.js:236:28
+      1    0.0%    3.7%  Function: ^toBin C:\github\backend\desafio14\node_modules\mongodb\lib\cmap\commands.js:345:10
+      1    0.0%    3.7%  Function: ^ondata node:internal/streams/readable:752:18
+      1    0.0%    3.7%  Function: ^onMessage C:\github\backend\desafio14\node_modules\mongodb\lib\cmap\connection.js:154:14
+      1    0.0%    3.7%  Function: ^onHeaders C:\github\backend\desafio14\node_modules\on-headers\index.js:56:20
+      1    0.0%    3.7%  Function: ^hasSessionSupport C:\github\backend\desafio14\node_modules\mongodb\lib\cmap\connection.js:390:27
+      1    0.0%    3.7%  Function: ^append C:\github\backend\desafio14\node_modules\vary\index.js:38:17
+      1    0.0%    3.7%  Function: ^Writable.cork node:internal/streams/writable:337:35
+      1    0.0%    3.7%  Function: ^Module._resolveFilename node:internal/modules/cjs/loader:848:35
+      1    0.0%    3.7%  Function: ^Module._nodeModulePaths node:internal/modules/cjs/loader:583:37
+      1    0.0%    3.7%  Function: ^FindCursor C:\github\backend\desafio14\node_modules\mongodb\lib\cursor\find_cursor.js:29:16
+      1    0.0%    3.7%  Function: ^<anonymous> node:internal/validators:222:42
+
+ [C++]:
+   ticks  total  nonlib   name
+
+ [Summary]:
+   ticks  total  nonlib   name
+     27    0.0%  100.0%  JavaScript
+      0    0.0%    0.0%  C++
+     18    0.0%   66.7%  GC
+  106653  100.0%          Shared libraries
+
+ [C++ entry points]:
+   ticks    cpp   total   name
+
+ [Bottom up (heavy) profile]:
+  Note: percentage shows a share of a particular caller in the total
+  amount of its parent calls.
+  Callers occupying less than 1.0% are not shown.
+
+   ticks parent  name
+  105725   99.1%  C:\Windows\SYSTEM32\ntdll.dll
+

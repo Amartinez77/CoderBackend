@@ -1,0 +1,8 @@
+[2023-02-01T21:40:13.054] [WARN] default - Ruta / método GET no implementados
+[2023-02-01T21:40:13.169] [WARN] default - Ruta /favicon.ico método GET no implementados
+[2023-02-01T21:40:22.220] [WARN] default - Ruta /info método GET no implementados
+[2023-02-01T21:43:39.462] [ERROR] default - No hay productos
+[2023-02-01T21:43:51.628] [WARN] default - Ruta / método GET no implementados
+[2023-02-02T21:02:57.718] [WARN] default - Ruta /favicon.ico método GET no implementados
+[2023-02-02T21:53:35.921] [ERROR] default - processInfo is not defined
+[2023-02-02T21:54:20.214] [ERROR] default - processInfo is not defined
