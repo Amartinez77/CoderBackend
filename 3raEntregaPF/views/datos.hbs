@@ -22,16 +22,17 @@
   </main> --}}
 
 
-   {{#if prueba}}
+   {{#if products}}
     <div class="table-responsive">
       <table class="table table-dark">
-        <tr style="color: yellow;"> <th>Nombre</th> <th>descripcion</th> <th>Precio</th> <th>Thumbnail</th> </tr>
-        {{#each prueba}}
+        <tr style="color: yellow;"> <th>Nombre</th> <th>descripcion</th> <th>codigo</th> <th>Thumbnail</th> <th>Precio</th> <th>stock</th>  </tr>
+        {{#each products}}
           <tr>
-            <td>{{this.name}}</td>
+            <td>{{name}}</td>
             <td>{{this.description}}</td>
             <td>{{this.code}}</td>
             <td><img src="{{this.pic}}" alt="Imagen del producto"></td>
+            {{!-- <td>{{this.pic}}</td> --}}
             <td>{{this.price}}</td>
             <td>{{this.stock}}</td>
           </tr>

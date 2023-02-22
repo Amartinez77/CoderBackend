@@ -10,24 +10,64 @@ let socket = io.connect();
 
 socket.on("productos", (data) => {
   render(data);
+  //console.log(data[0].name)
 });
 
 socket.on("messages", (data) => {
   renderMessages(data);
 });
 
-function render(data) {
-  let html = data
+async function render(data) {
+  let html = await data
     .map((elem, index) => {
       return `<tr>
-    <td>${elem.title}</td>
+    <td>${elem.name}</td>
     <td>${elem.price}</td>
-    <td><img src="${elem.thumbnail}" alt="Imagen del producto"></td>
+    <td><img src="${elem.pic}" alt="Imagen del producto"></td>
+    <td><button class="addToCart" id="${elem._id}">addToCart</button></td>
     </tr>`;
     })
     .join(" ");
   document.getElementById("tbproducts").innerHTML = html;
+
+    let botonesComprar = document.querySelectorAll('.addToCart');
+
+  console.log(botonesComprar)
+
+botonesComprar.forEach((boton) => {
+  boton.addEventListener("click", (e) => {
+    console.log(e.target.id)
+
+    if (localStorage.carrito) {
+      //solucionar problema
+      let carrito = JSON.parse(localStorage.carrito)
+      console.log(carrito)
+      let index = carrito.findIndex((prod) => prod.id == e.target.id)
+      if (index != -1) {
+        carrito[index].cantidad = carrito[index].cantidad +1
+      } else {
+        carrito.push({ id: e.target.id, cantidad : 1 });
+      }
+      localStorage.setItem("carrito", JSON.stringify(carrito))
+
+    } else {
+      localStorage.setItem("carrito", JSON.stringify([{id:e.target.id, cantidad: 1}]))
+    }
+    Toastify({
+      text: "producto agregado!",
+      duration: 3000,
+    }).showToast();
+  })
+})
+  
+
 }
+
+
+
+
+
+
 
 function renderMessages(data) {
   const denormalizedMessages = denormalizar(data);
@@ -48,14 +88,14 @@ function renderMessages(data) {
 
 function addProduct(e) {
   let producto = {
-    title: document.getElementById("title").value,
+    title: document.getElementById("name").value,
     price: document.getElementById("price").value,
-    thumbnail: document.getElementById("thumbnail").value,
+    thumbnail: document.getElementById("pic").value,
   };
   socket.emit("new-product", producto);
-  document.getElementById("title").value = "";
+  document.getElementById("name").value = "";
   document.getElementById("price").value = "";
-  document.getElementById("thumbnail").value = "";
+  document.getElementById("pic").value = "";
   return false;
 }
 

@@ -5,13 +5,14 @@ const productSchema = new mongoose.Schema({
   name: { type: String, required: true },
   description: { type: String, required: true },
   code: { type: Number, required: true, unique: true },
-  thumbnail: { type: String, required: true },
+  pic: { type: String, required: true },
   price: { type: Number, required: true },
+  stock: { type: Number}
 
 });
 
-const productModel = mongoose.model("products", productSchema);
+const productosModel = mongoose.model("products", productSchema);
 module.exports = {
-  productModel,
+  productosModel,
   productSchema,
 };

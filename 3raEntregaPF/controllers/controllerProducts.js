@@ -2,7 +2,8 @@
 const Products = require("../api/containerProducts");
 //const Products = require("../controllers/containerFirebase.js");
 
-const products = new Products();
+ //const products = new Products();
+//const products = []
 
 //Get all products or product selected
 const getProducts = async (req, res) => {
@@ -13,7 +14,7 @@ const getProducts = async (req, res) => {
     
         return res.render("datos", { prueba } );
   }
-  const product = await products.getById(req.params.id);
+  const product = await Products.getById(req.params.id);
   console.log(product);
   if (!product)
     return res
@@ -45,7 +46,7 @@ const deleteProduct = async (req, res) => {
 };
 
 module.exports = {
-  products,
+
   getProducts,
   addProduct,
   updateProduct,

@@ -15,7 +15,7 @@
   {{/unless}}
 </header>
 <main>
-  <div class="container mt-3">
+  {{!-- <div class="container mt-3">
     <div class="jumbotron">
       <h3 style="color:blue;">Nuevo producto</h3>
       <br />
@@ -55,7 +55,7 @@
         <button class="btn btn-success mt-3 mb-5">Enviar</button>
       </form>
     </div>
-  </div>
+  </div> --}}
 
 
   {{!-- pruebaaaaaaa --}}
@@ -64,9 +64,9 @@
     <div class="jumbotron">
       <h3 style="color:blue;">Nuevo producto</h3>
       <br />
-      <form action="/api/productos2" method="POST">
+      <form action="/api/productos" method="POST">
         <div class="form-group">
-          <label for="title"><b>Nombre</b></label>
+          <label for="name"><b>Nombre</b></label>
           <input
             id="name"
             class="form-control"
@@ -223,7 +223,9 @@
   </div>
 </aside>
 <footer>
-  <a href="/api/prod">Ver lista de productos</a>
+  <a href="/api/productos">Ver lista de productos</a>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/normalizr@3.6.1/dist/normalizr.browser.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
 <script src="/js/main.js"></script>

@@ -1,6 +1,6 @@
 const { MONGOURL, PORT } = require("./config");
 require("./mongodb/mongooseLoader");
- const { fork } = require("child_process");
+const { fork } = require("child_process");
 const User = require("./models/user");
 const bCrypt = require("bcrypt");
 const { normalizar, print, denormalizar } = require("./utils/normalizar");
@@ -24,8 +24,11 @@ const numCPUs = require("os").cpus().length;
 const compression = require("compression");
 const logger = require("./utils/logger.js");
 app.use(compression());
-
-
+const cartRouter = require("./routes/cart")
+const productRouter = require("./routes/product")
+const sendGmail  = require("./utils/nodemailer")
+const  ProductoDao  = require("./dao/ProductoDao")
+const productoDao = new ProductoDao();
 //prueba
 
 //const Products = require("./api/containerProducts");
@@ -40,9 +43,6 @@ const {
   updateProduct,
   deleteProduct,
 } = require("./controllers/controllerProducts");
-
-
-
 
 
 
@@ -71,6 +71,11 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
     engine({
       defaultLayout: "index",
       extname: ".hbs",
+      partialsDir: __dirname + "/views/partials",
+      runtimeOptions: {
+        allowProtoPropertiesByDefault: true,
+        allowProtoMethodsByDefault: true,
+      }
     })
   );
   app.set("view engine", "hbs");
@@ -78,6 +83,9 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
 
   app.use(express.static("./public"));
   app.use("/api", apiRouter);
+  app.use("/api/productos", productRouter)
+  app.use("/api/carrito", cartRouter)
+
   apiRouter.use(express.json());
   apiRouter.use(express.urlencoded({ extended: true }));
   apiRouter.use(
@@ -153,12 +161,14 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
             const newUser = new User();
             newUser.username = username;
             newUser.password = createHash(password);
+            sendGmail(newUser)
             newUser.save((err) => {
               if (err) {
                 console.log("Error in Saving user: " + err);
                 throw err;
               }
               console.log("User Registration succesful");
+              
               return done(null, newUser);
             });
           }
@@ -184,7 +194,9 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
   io.on("connection", async (socket) => {
     console.log("Un cliente se ha conectado");
 
-    const arrayDeProductos = await apiProductos.getAll();
+    //const arrayDeProductos = await apiProductos.getAll();
+    const arrayDeProductos = await productoDao.getAll()
+    
     //console.log(arrayDeProductos);
     const messages = await chat.getMessages().then((res) => res);
     const normalizedMessages = normalizar(messages);
@@ -193,24 +205,20 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
     socket.emit("productos", arrayDeProductos);
     socket.emit("messages", normalizedMessages);
 
-    socket.on("new-product", async (data) => {
-      console.log(data)
+    //socket.on("new-product", async (data) => {
+      //console.log(data)
 
       //addProduct(data)
-      await apiProductos.save(data);
+      //await apiProductos.save(data);
       //.then((resolve) => resolve);
-      const arrayDeProductos = await apiProductos.getAll();
+      //const arrayDeProductos = await apiProductos.getAll();
       
-      let prueba = [{
-        id: 01,
-        title: "pepe"
-      }]
-
+      
       
 
-      io.sockets.emit("productos", arrayDeProductos);
+      //io.sockets.emit("productos", arrayDeProductos);
       //io.sockets.emit("productos", prueba);
-    });
+   // });
 
     socket.on("new-message", async (data) => {
       await chat.saveMessages(data).then((resolve) => resolve);
@@ -264,46 +272,44 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
     }
   });
 
-  apiRouter.get("/productos-test", async (req, res, next) => {
-    try {
-      const arrayDeProductos = await apiProductos.getAll();
-      if (arrayDeProductos.length === 0) {
-        throw new Error("No hay productos");
-      }
+  // apiRouter.get("/productos-test", async (req, res, next) => {
+  //   try {
+  //     const arrayDeProductos = await apiProductos.getAll();
+  //     if (arrayDeProductos.length === 0) {
+  //       throw new Error("No hay productos");
+  //     }
 
-      let prueba = [
-        {
-          id: 01,
-          title: "pepe",
-        },
-      ];
+  //     let prueba = [
+  //       {
+  //         id: 01,
+  //         title: "pepe",
+  //       },
+  //     ];
 
-      let arrayProd = await getProducts;
-      console.log(arrayProd);
+  //     let arrayProd = await getProducts;
+  //     console.log(arrayProd);
 
 
-      res.render("datos", { prueba });
-      //console.log(arrayDeProductos)
+  //     res.render("datos", { prueba });
 
-      //res.render("datos", { arrayDeProductos });
-    } catch (err) {
-      next(err);
-    }
-  });
+  //   } catch (err) {
+  //     next(err);
+  //   }
+  // });
 
-  apiRouter.get("/productos/:id", async (req, res, next) => {
-    try {
-      const producto = await apiProductos.getById(Number(req.params.id));
-      //.then((resolve) => resolve);
-      if (!producto) {
-        throw new Error("Producto no encontrado");
-      }
-      res.json(producto);
-    } catch (err) {
-      logger.error(err);
-      next(err);
-    }
-  });
+  // apiRouter.get("/productos/:id", async (req, res, next) => {
+  //   try {
+  //     const producto = await apiProductos.getById(Number(req.params.id));
+
+  //     if (!producto) {
+  //       throw new Error("Producto no encontrado");
+  //     }
+  //     res.json(producto);
+  //   } catch (err) {
+  //     logger.error(err);
+  //     next(err);
+  //   }
+  // });
 
   apiRouter.get("/logout", async (req, res, next) => {
     if (req.session.user) {
@@ -325,11 +331,26 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
     res.render("signin");
   });
   apiRouter.get("/signup", (req, res) => {
+
+        
+          console.log(req.body);
+          //sendGmail(req.body);
+          //res.redirect("/api");
+        
     res.render("signup");
   });
   apiRouter.get("/logoff", (req, res) => {
-    req.logOut();
-    res.redirect("/api");
+    // req.logOut();
+    // res.redirect("/api");
+
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/api");
+    });
+    
+
   });
   apiRouter.get("/errorlogin", (req, res) => {
     res.render("errorlogin", { message: req.flash("message") });
@@ -370,76 +391,66 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
       res.redirect("/api");
     }
   );
+
   apiRouter.post(
     "/signup",
     passport.authenticate("signup", {
       successRedirect: "/api",
       failureRedirect: "/api/errorsignup",
-    })
+    })    
   );
 
-  apiRouter.post("/productos", async (req, res, next) => {
-    try {
-      res.json(await apiProductos.popular(req.query.cant));
-    } catch (err) {
-      logger.error(err);
-      next(err);
-    }
-  });
+  // apiRouter.post("/productos", async (req, res, next) => {
+  //   try {
+  //     res.json(await apiProductos.popular(req.query.cant));
+  //   } catch (err) {
+  //     logger.error(err);
+  //     next(err);
+  //   }
+  // });
 
-  apiRouter.put("/productos/:id", async (req, res, next) => {
-    try {
-      const producto = await productos
-        .getById(Number(req.params.id))
-        .then((res) => res);
-      if (!producto) {
-        throw new Error("Producto no encontrado");
-      }
-      await productos
-        .update(
-          Number(req.params.id),
-          req.body.title,
-          req.body.price,
-          req.body.thumbnail
-        )
-        .then((resolve) => {
-          res.json(resolve);
-        });
-    } catch (err) {
-      logger.error(err);
-      next(err);
-    }
-  });
-  apiRouter.delete("/productos/:id", async (req, res, next) => {
-    try {
-      const producto = await productos
-        .getById(Number(req.params.id))
-        .then((resolve) => resolve);
-      if (!producto) {
-        throw new Error("Producto no encontrado");
-      }
-      await productos.deleteById(Number(req.params.id)).then((resolve) => {
-        res.json(`${producto.title} se borro con éxito`);
-      });
-    } catch (err) {
-      logger.error(err);
-      next(err);
-    }
-  });
+  // apiRouter.put("/productos/:id", async (req, res, next) => {
+  //   try {
+  //     const producto = await productos
+  //       .getById(Number(req.params.id))
+  //       .then((res) => res);
+  //     if (!producto) {
+  //       throw new Error("Producto no encontrado");
+  //     }
+  //     await productos
+  //       .update(
+  //         Number(req.params.id),
+  //         req.body.title,
+  //         req.body.price,
+  //         req.body.thumbnail
+  //       )
+  //       .then((resolve) => {
+  //         res.json(resolve);
+  //       });
+  //   } catch (err) {
+  //     logger.error(err);
+  //     next(err);
+  //   }
+  // });
 
-  apiRouter.post("/productos2", addProduct);
+  // apiRouter.delete("/productos/:id", async (req, res, next) => {
+  //   try {
+  //     const producto = await productos
+  //       .getById(Number(req.params.id))
+  //       .then((resolve) => resolve);
+  //     if (!producto) {
+  //       throw new Error("Producto no encontrado");
+  //     }
+  //     await productos.deleteById(Number(req.params.id)).then((resolve) => {
+  //       res.json(`${producto.title} se borro con éxito`);
+  //     });
+  //   } catch (err) {
+  //     logger.error(err);
+  //     next(err);
+  //   }
+  // });
 
-  //Get all products or product selected
-  apiRouter.get("/prod/:id?", getProducts);
 
-  //Add product
-  // apiRouter.post("/", addProduct);
-
-  //Update product
-  apiRouter.put("/update/:id", updateProduct);
-
-  //Delete product
-  apiRouter.delete("/delete/:id", deleteProduct);
 
   app.use((req, res, next) => {
     logger.warn(`Ruta ${req.url} método ${req.method} no implementados`);
@@ -448,6 +459,16 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
       descripcion: `Ruta ${req.url} método ${req.method} no implementados`,
     });
   });
+
+
+
+  // apiRouter.get("/probando", cartRouter);
+
+
+
+
+
+
 
   function handleErrors(err, req, res, next) {
     logger.error(err.message);
