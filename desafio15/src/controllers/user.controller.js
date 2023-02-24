@@ -8,7 +8,7 @@ export async function logInView(req, res) {
   if (req.session.login) {
     res.redirect("/api/usuario");
   } else {
-    res.render("pages/login", { status: false });
+    res.render("login", { status: false });
   }
 }
 
@@ -16,7 +16,7 @@ export async function signUpView(req, res) {
   if (req.session.login) {
     res.redirect("/api/usuario");
   } else {
-    res.render("pages/signup", { status: false });
+    res.render("signup", { status: false });
   }
 }
 
@@ -26,11 +26,11 @@ export async function signUp(req, res) {
 
   if (newUser) {
     // Descomentar si has llenado el .env con tu email y password de Gmail.
-    /*
+    
         const now = new Date();
         const newUserTemplateEmail = htmlNewUserTemplate(newUser._id, now.toLocaleString());
         await sendGmail('Nuevo usuario creado', newUserTemplateEmail);
-        */
+    
     res.status(200).json({ success: "User added with ID " + newUser._id });
   } else {
     res
@@ -59,7 +59,7 @@ export async function logIn(req, res) {
 }
 
 export async function homeView(req, res) {
-  res.render("pages/home", { status: req.session.login });
+  res.render("home", { status: req.session.login });
 }
 
 export async function logOutView(req, res) {
@@ -70,7 +70,7 @@ export async function logOutView(req, res) {
       if (err) {
         res.json(err);
       } else {
-        res.render("pages/logout", { status: false });
+        res.render("logout", { status: false });
       }
     });
   }

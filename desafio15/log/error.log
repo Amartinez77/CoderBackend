@@ -1,0 +1,31 @@
+[2023-02-24T01:09:07.431] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T01:09:54.790] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T01:12:15.511] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T01:15:34.304] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T01:16:50.400] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:14:21.008] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:16:36.741] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:27:59.255] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:31:51.472] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:33:17.015] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:37:37.614] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:39:21.523] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:40:00.352] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:42:35.224] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:44:53.789] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:45:33.807] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:46:08.500] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-02-24T02:48:45.077] [ERROR] default - Error: Missing credentials for "PLAIN"
+    at SMTPConnection._formatError (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:790:19)
+    at SMTPConnection.login (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:444:38)
+    at C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-transport\index.js:272:32
+    at SMTPConnection.<anonymous> (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:213:17)
+    at Object.onceWrapper (node:events:645:28)
+    at SMTPConnection.emit (node:events:526:28)
+    at SMTPConnection._actionEHLO (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:1331:14)
+    at SMTPConnection._processResponse (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:953:20)
+    at SMTPConnection._onData (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:755:14)
+    at TLSSocket.SMTPConnection._onSocketData (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:193:44) {
+  code: 'EAUTH',
+  command: 'API'
+}

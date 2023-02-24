@@ -7,7 +7,8 @@ import session from "express-session";
 import { engine } from "express-handlebars";
 import path from "path";
 import { fileURLToPath } from "url";
-import mongoStore from "connect-mongo";
+import mongoose from "mongoose";
+import MongoStore from "connect-mongo";
 import compression from "compression";
 import minimist from "minimist";
 import logger from "./utils/loggers/Log4jsLogger.js";
@@ -15,42 +16,75 @@ import loggerMiddleware from "./middlewares/routesLogger.middleware.js";
 
 ///////
 
+
 import { SECRET, MONGO_URI } from "./configs/db.config.js";
+console.log(MONGO_URI)
 
 const app = express();
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 app.use(loggerMiddleware);
 app.use(express.static("public"));
 app.use(compression());
-app.set("views", "./src/views");
-app.set("view engine", "hbs");
 
 app.engine(
   "hbs",
   engine({
     extname: ".hbs",
-    defaultLayout: "index.hbs",
-    layoutsDir: __dirname + "/views/layouts",
+    defaultLayout: "index",
+    //layoutsDir: __dirname + "/views/layouts",
     partialsDir: __dirname + "/views/partials",
+    runtimeOptions: {
+      allowProtoPropertiesByDefault: true,
+      allowProtoMethodsByDefault: true,
+    },
   })
 );
 
+app.set("view engine", "hbs");
+app.set("views", "./views");
+
+
+// app.use(
+//   session({
+//     store: mongoStore.create({
+//       mongoUrl: process.env.MONGO_URI,
+//       options: {
+//         useNewUrlParser: true, // Corregido
+//         useUnifiedTopology: true,
+//       },
+//     }),
+//     secret: process.env.SECRET,
+//     resave: true,
+//     saveUninitialized: true,
+//     cookie: { maxAge: 600000 }, // 10 min.
+//   })
+// );
+
+mongoose.set("strictQuery", false);
+mongoose.connect(
+  "mongodb+srv://usuario1:abc123456@cluster0.crzm5b3.mongodb.net/baseTest",
+  {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }
+);
+
+const sessionStore = MongoStore.create({
+  mongoUrl:
+    "mongodb+srv://usuario1:abc123456@cluster0.crzm5b3.mongodb.net/baseTest",
+});
+
 app.use(
   session({
-    store: mongoStore.create({
-      mongoUrl: MONGO_URI,
-      options: {
-        userNewParser: true,
-        useUnifiedTopology: true,
-      }
-    }),
-    secret: SECRET,
-    resave: true,
-    saveUninitialized: true,
-    cookie: { maxAge: 600000 }, //10 min.
+    secret: "mysecret",
+    resave: false,
+    saveUninitialized: false,
+    store: sessionStore,
   })
 );
 
