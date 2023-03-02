@@ -8,19 +8,23 @@ import { engine } from "express-handlebars";
 import path from "path";
 import { fileURLToPath } from "url";
 import mongoose from "mongoose";
-import MongoStore from "connect-mongo";
+import  MongoStore  from "connect-mongo";
 import compression from "compression";
 import minimist from "minimist";
 import logger from "./utils/loggers/Log4jsLogger.js";
 import loggerMiddleware from "./middlewares/routesLogger.middleware.js";
-
+import flash from "connect-flash"
+const app = express();
 ///////
 
-
+import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
+import { UsuariosModel } from "./models/usuarios.model.js";
+import { UsuarioService } from "./services/usuario.service.js";
 import { SECRET, MONGO_URI } from "./configs/db.config.js";
 console.log(MONGO_URI)
 
-const app = express();
+
 
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
@@ -91,6 +95,59 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+
+
+
+// const strategy = new LocalStrategy(
+//   { passReqToCallback: true },
+//   (req, username, password, done) => {
+//     User.findOne({ username }, (err, user) => {
+//       if (err) return done(err);
+//       if (!user) {
+//         console.log("User Not Found with email " + username);
+//         return done(
+//           null,
+//           false,
+//           req.flash("message", "Usuario no encontrado.")
+//         );
+//       }
+//       if (!isValidPassword(user, password)) {
+//         console.log("Invalid Password");
+//         return done(null, false, req.flash("message", "Contraseña incorrecta"));
+//       }
+//       return done(null, user);
+//     });
+//   }
+// );
+
+// passport.use("login", strategy);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+passport.use(
+  new LocalStrategy(async function (username, password, done) {
+    const user = await UsuarioService.authenticate(username, password);
+    console.log(user)
+    if (!user) {
+      return done(null, false);
+    }
+    return done(null, user);
+  })
+);
+
+passport.serializeUser((user, done) => {
+  done(null, user._id);
+});
+passport.deserializeUser((id, done) => {
+  User.findById(id, (err, user) => {
+    done(err, user);
+  });
+});
+
+
+
+
 app.use("/api/productos", productRouter);
 app.use("/api/carrito", cartRouter);
 app.use("/api/usuario", userRouter);
@@ -99,6 +156,21 @@ app.use("/test", otherRouter);
 app.all("*", (req, res) => {
   res.status(404).json({ error: "ruta no existente" });
 });
+
+
+
+
+
+
+function isValidPassword(user, password) {
+  console.log(user, password);
+  return bCrypt.compareSync(password, user.password);
+}
+function createHash(password) {
+  return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+}
+
+
 
 /* --------------- Leer el puerto por consola o setear default -------------- */
 

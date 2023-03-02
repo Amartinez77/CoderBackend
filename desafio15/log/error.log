@@ -29,3 +29,86 @@
   code: 'EAUTH',
   command: 'API'
 }
+[2023-03-01T18:18:36.918] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-01T18:21:04.453] [ERROR] default - Error: Missing credentials for "PLAIN"
+    at SMTPConnection._formatError (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:790:19)
+    at SMTPConnection.login (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:444:38)
+    at C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-transport\index.js:272:32
+    at SMTPConnection.<anonymous> (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:213:17)
+    at Object.onceWrapper (node:events:645:28)
+    at SMTPConnection.emit (node:events:526:28)
+    at SMTPConnection._actionEHLO (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:1331:14)
+    at SMTPConnection._processResponse (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:953:20)
+    at SMTPConnection._onData (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:755:14)
+    at TLSSocket.SMTPConnection._onSocketData (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:193:44) {
+  code: 'EAUTH',
+  command: 'API'
+}
+[2023-03-01T18:30:30.023] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-01T18:31:04.308] [ERROR] default - Error: Missing credentials for "PLAIN"
+    at SMTPConnection._formatError (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:790:19)
+    at SMTPConnection.login (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:444:38)
+    at C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-transport\index.js:272:32
+    at SMTPConnection.<anonymous> (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:213:17)
+    at Object.onceWrapper (node:events:645:28)
+    at SMTPConnection.emit (node:events:526:28)
+    at SMTPConnection._actionEHLO (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:1331:14)
+    at SMTPConnection._processResponse (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:953:20)
+    at SMTPConnection._onData (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:755:14)
+    at TLSSocket.SMTPConnection._onSocketData (C:\github\backend\desafio15\node_modules\nodemailer\lib\smtp-connection\index.js:193:44) {
+  code: 'EAUTH',
+  command: 'API'
+}
+[2023-03-01T18:47:15.559] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-01T18:50:47.229] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-01T18:51:00.701] [ERROR] default - MongoServerError: E11000 duplicate key error collection: baseTest.users index: username_1 dup key: { username: "pedro" }
+    at C:\github\backend\desafio15\node_modules\mongodb\lib\operations\insert.js:53:33
+    at C:\github\backend\desafio15\node_modules\mongodb\lib\cmap\connection_pool.js:333:25
+    at C:\github\backend\desafio15\node_modules\mongodb\lib\sdam\server.js:210:17
+    at handleOperationResult (C:\github\backend\desafio15\node_modules\mongodb\lib\sdam\server.js:326:20)
+    at Connection.onMessage (C:\github\backend\desafio15\node_modules\mongodb\lib\cmap\connection.js:242:9)
+    at MessageStream.<anonymous> (C:\github\backend\desafio15\node_modules\mongodb\lib\cmap\connection.js:61:60)
+    at MessageStream.emit (node:events:526:28)
+    at processIncomingData (C:\github\backend\desafio15\node_modules\mongodb\lib\cmap\message_stream.js:125:16)
+    at MessageStream._write (C:\github\backend\desafio15\node_modules\mongodb\lib\cmap\message_stream.js:33:9)
+    at writeOrBuffer (node:internal/streams/writable:389:12) {
+  index: 0,
+  code: 11000,
+  keyPattern: { username: 1 },
+  keyValue: { username: 'pedro' },
+  [Symbol(errorLabels)]: Set(0) {}
+}
+[2023-03-01T22:58:19.409] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-01T23:31:45.889] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-01T23:32:03.186] [ERROR] default - TypeError: user.comparePassword is not a function
+    at UsuarioService.loginUser (file:///C:/github/backend/desafio15/src/services/usuario.service.js:29:25)
+    at processTicksAndRejections (node:internal/process/task_queues:96:5)
+    at async logIn (file:///C:/github/backend/desafio15/src/controllers/user.controller.js:48:22)
+[2023-03-01T23:43:55.552] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-01T23:58:36.414] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T00:01:28.516] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T00:36:58.750] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T00:40:34.359] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:22:44.052] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:24:20.826] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:25:06.303] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:30:08.658] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:31:26.597] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:46:05.579] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:47:17.274] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:50:21.191] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:51:30.650] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:57:24.521] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:57:44.921] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:57:46.812] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:59:06.808] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:59:08.756] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:59:11.796] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:59:14.661] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T01:59:16.848] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T02:00:06.766] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T02:00:09.858] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T02:00:21.791] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T02:08:37.474] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T02:10:10.300] [ERROR] default - ⛔ Error al conectarse a MongoDB
+[2023-03-02T02:12:34.228] [ERROR] default - ⛔ Error al conectarse a MongoDB

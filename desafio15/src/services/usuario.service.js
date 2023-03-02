@@ -21,15 +21,22 @@ export class UsuarioService {
         [this.USERNAME_FIELD]: object.username,
       });
 
+      console.log(user)
+
       if (!user) {
         logger.info(`User '${object.username}' does not exist`);
         return null;
       }
 
-      return await user.comparePassword(object.password);
+      const isValidPassword = await user.comparePassword(password);
+      if (!isValidPassword) {
+        return null;
+      }
+      return user;
+      //return await user.comparePassword(object.password);
     } catch (error) {
       logger.error(error);
-      return null;
+      // return null;
     }
   }
 }

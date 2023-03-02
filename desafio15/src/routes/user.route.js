@@ -1,4 +1,5 @@
 import express from "express";
+import passport from "passport"
 import * as userController from "../controllers/user.controller.js";
 import { logIn } from "../controllers/user.controller.js";
 
@@ -11,5 +12,14 @@ router.get("/logout", userController.logOutView);
 
 router.post("/signup", userController.signUp);
 router.post("/login", userController.logIn);
+// router.post(
+//   "/login",
+//   passport.authenticate("login", {
+//     successRedirect: "/api/usuario",
+//     failureRedirect: "/login",
+//     failureFlash: true,
+//   })
+// );
+
 
 export default router;
