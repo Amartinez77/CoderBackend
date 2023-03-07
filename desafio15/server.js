@@ -26,11 +26,9 @@ const logger = require("./utils/logger.js");
 app.use(compression());
 const cartRouter = require("./routes/cart")
 const productRouter = require("./routes/product")
-const userRouter = require("./routes/user")
 const sendGmail  = require("./utils/nodemailer")
 const  ProductoDao  = require("./dao/ProductoDao")
 const productoDao = new ProductoDao();
-
 //prueba
 
 //const Products = require("./api/containerProducts");
@@ -84,14 +82,13 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
   app.set("views", "./views");
 
   app.use(express.static("./public"));
-  //app.use("/api", apiRouter);
+  app.use("/api", apiRouter);
   app.use("/api/productos", productRouter)
   app.use("/api/carrito", cartRouter)
-  app.use("/api/usuario", userRouter)
 
-  app.use(express.json());
-  app.use(express.urlencoded({ extended: true }));
-  app.use(
+  apiRouter.use(express.json());
+  apiRouter.use(express.urlencoded({ extended: true }));
+  apiRouter.use(
     session({
       secret: "AlckejcUi5Jnm3rFhNjUil87",
       resave: false,
@@ -104,93 +101,94 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
     })
   );
   const flash = require("connect-flash");
-  app.use(flash());
+  apiRouter.use(flash());
 
-  // function isValidPassword(user, password) {
-  //   console.log(user, password);
-  //   return bCrypt.compareSync(password, user.password);
-  // }
-  // function createHash(password) {
-  //   return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
-  // }
+  function isValidPassword(user, password) {
+    console.log(user, password);
+    return bCrypt.compareSync(password, user.password);
+  }
+  function createHash(password) {
+    return bCrypt.hashSync(password, bCrypt.genSaltSync(10), null);
+  }
 
-  // passport.use(
-  //   "login",
-  //   new LocalStrategy(
-  //     { passReqToCallback: true },
-  //     (req, username, password, done) => {
-  //       User.findOne({ username }, (err, user) => {
-  //         if (err) return done(err);
-  //         if (!user) {
-  //           console.log("User Not Found with email " + username);
-  //           return done(
-  //             null,
-  //             false,
-  //             req.flash("message", "Usuario no encontrado.")
-  //           );
-  //         }
-  //         if (!isValidPassword(user, password)) {
-  //           console.log("Invalid Password");
-  //           return done(
-  //             null,
-  //             false,
-  //             req.flash("message", "Contraseña incorrecta")
-  //           );
-  //         }
-  //         return done(null, user);
-  //       });
-  //     }
-  //   )
-  // );
+  passport.use(
+    "login",
+    new LocalStrategy(
+      { passReqToCallback: true },
+      (req, username, password, done) => {
+        User.findOne({ username }, (err, user) => {
+          if (err) return done(err);
+          if (!user) {
+            console.log("User Not Found with email " + username);
+            return done(
+              null,
+              false,
+              req.flash("message", "Usuario no encontrado.")
+            );
+          }
+          if (!isValidPassword(user, password)) {
+            console.log("Invalid Password");
+            return done(
+              null,
+              false,
+              req.flash("message", "Contraseña incorrecta")
+            );
+          }
+          return done(null, user);
+        });
+      }
+    )
+  );
 
-  // passport.use(
-  //   "signup",
-  //   new LocalStrategy(
-  //     { passReqToCallback: true },
-  //     (req, username, password, done) => {
-  //       User.findOne({ username: username }, (err, user) => {
-  //         if (err) {
-  //           console.log("Error in SignUp: " + err);
-  //           return done(err);
-  //         }
-  //         if (user) {
-  //           console.log("User already exists with username: " + username);
-  //           return done(
-  //             null,
-  //             false,
-  //             req.flash("message", "El usuario ya se encuentra registrado")
-  //           );
-  //         } else {
-  //           const newUser = new User();
-  //           newUser.username = username;
-  //           newUser.password = createHash(password);
-  //           sendGmail(newUser)
-  //           newUser.save((err) => {
-  //             if (err) {
-  //               console.log("Error in Saving user: " + err);
-  //               throw err;
-  //             }
-  //             console.log("User Registration succesful");
+  passport.use(
+    "signup",
+    new LocalStrategy(
+      { passReqToCallback: true },
+      (req, username, password, done) => {
+        User.findOne({ username: username }, (err, user) => {
+          if (err) {
+            console.log("Error in SignUp: " + err);
+            return done(err);
+          }
+          if (user) {
+            console.log("User already exists with username: " + username);
+            return done(
+              null,
+              false,
+              req.flash("message", "El usuario ya se encuentra registrado")
+            );
+          } else {
+            const newUser = new User();
+            newUser.username = username;
+            newUser.password = createHash(password);
+            // habilitar la funciion solo para el envio de emaill
+            // sendGmail(newUser)
+            newUser.save((err) => {
+              if (err) {
+                console.log("Error in Saving user: " + err);
+                throw err;
+              }
+              console.log("User Registration succesful");
               
-  //             return done(null, newUser);
-  //           });
-  //         }
-  //       });
-  //     }
-  //   )
-  // );
+              return done(null, newUser);
+            });
+          }
+        });
+      }
+    )
+  );
 
-  // passport.serializeUser((user, done) => {
-  //   done(null, user._id);
-  // });
-  // passport.deserializeUser((id, done) => {
-  //   User.findById(id, (err, user) => {
-  //     done(err, user);
-  //   });
-  // });
+  passport.serializeUser((user, done) => {
+    done(null, user._id);
+  });
+  passport.deserializeUser((id, done) => {
+    User.findById(id, (err, user) => {
+      done(err, user);
+    });
+  });
 
-  app.use(passport.initialize());
-  app.use(passport.session());
+  apiRouter.use(passport.initialize());
+  apiRouter.use(passport.session());
 
   let chat = new Chat("./contenedores/chat.txt");
 
@@ -207,6 +205,21 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
 
     socket.emit("productos", arrayDeProductos);
     socket.emit("messages", normalizedMessages);
+
+    //socket.on("new-product", async (data) => {
+      //console.log(data)
+
+      //addProduct(data)
+      //await apiProductos.save(data);
+      //.then((resolve) => resolve);
+      //const arrayDeProductos = await apiProductos.getAll();
+      
+      
+      
+
+      //io.sockets.emit("productos", arrayDeProductos);
+      //io.sockets.emit("productos", prueba);
+   // });
 
     socket.on("new-message", async (data) => {
       await chat.saveMessages(data).then((resolve) => resolve);
@@ -243,14 +256,14 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
 
   // esto no va para este desafio
 
-  // apiRouter.get("/random/:cant?", (req, res) => {
-  //   const forked = fork("./utils/generateRandom.js");
-  //   let cant = +req.params.cant || 100000000;
-  //   forked.send(cant);
-  //   forked.on("message", (numeros) => {
-  //     res.send(numeros.res);
-  //   });
-  // });
+  apiRouter.get("/random/:cant?", (req, res) => {
+    const forked = fork("./utils/generateRandom.js");
+    let cant = +req.params.cant || 100000000;
+    forked.send(cant);
+    forked.on("message", (numeros) => {
+      res.send(numeros.res);
+    });
+  });
 
   apiRouter.get("/", async (req, res, next) => {
     if (req.isAuthenticated()) {
@@ -260,95 +273,184 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
     }
   });
 
+  // apiRouter.get("/productos-test", async (req, res, next) => {
+  //   try {
+  //     const arrayDeProductos = await apiProductos.getAll();
+  //     if (arrayDeProductos.length === 0) {
+  //       throw new Error("No hay productos");
+  //     }
 
-  // apiRouter.get("/logout", async (req, res, next) => {
-  //   if (req.session.user) {
-  //     const session = req.session.user;
-  //     req.session.destroy((err) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         res.json(`Hasta luego ${session}`);
-  //       }
-  //     });
-  //     setTimeout(() => {
-  //       res.redirect("/api");
-  //     }, 2000);
+  //     let prueba = [
+  //       {
+  //         id: 01,
+  //         title: "pepe",
+  //       },
+  //     ];
+
+  //     let arrayProd = await getProducts;
+  //     console.log(arrayProd);
+
+
+  //     res.render("datos", { prueba });
+
+  //   } catch (err) {
+  //     next(err);
   //   }
   // });
 
-  // apiRouter.get("/signin", (req, res) => {
-  //   res.render("signin");
-  // });
-  // apiRouter.get("/signup", (req, res) => {
+  // apiRouter.get("/productos/:id", async (req, res, next) => {
+  //   try {
+  //     const producto = await apiProductos.getById(Number(req.params.id));
 
-        
-  //         console.log(req.body);
-  //         //sendGmail(req.body);
-  //         //res.redirect("/api");
-        
-  //   res.render("signup");
-  // });
-  // apiRouter.get("/logoff", (req, res) => {
-  //   // req.logOut();
-  //   // res.redirect("/api");
-
-  //   req.logout(function (err) {
-  //     if (err) {
-  //       return next(err);
+  //     if (!producto) {
+  //       throw new Error("Producto no encontrado");
   //     }
-  //     res.redirect("/api");
-  //   });
+  //     res.json(producto);
+  //   } catch (err) {
+  //     logger.error(err);
+  //     next(err);
+  //   }
+  // });
+
+  apiRouter.get("/logout", async (req, res, next) => {
+    if (req.session.user) {
+      const session = req.session.user;
+      req.session.destroy((err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(`Hasta luego ${session}`);
+        }
+      });
+      setTimeout(() => {
+        res.redirect("/api");
+      }, 2000);
+    }
+  });
+
+  apiRouter.get("/signin", (req, res) => {
+    res.render("signin");
+  });
+  apiRouter.get("/signup", (req, res) => {
+
+        
+          console.log(req.body);
+          //sendGmail(req.body);
+          //res.redirect("/api");
+        
+    res.render("signup");
+  });
+  apiRouter.get("/logoff", (req, res) => {
+    // req.logOut();
+    // res.redirect("/api");
+
+    req.logout(function (err) {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/api");
+    });
     
 
-  // });
-  // apiRouter.get("/errorlogin", (req, res) => {
-  //   res.render("errorlogin", { message: req.flash("message") });
-  // });
-  // apiRouter.get("/errorsignup", (req, res) => {
-  //   res.render("errorsignup", { message: req.flash("message") });
-  // });
+  });
+  apiRouter.get("/errorlogin", (req, res) => {
+    res.render("errorlogin", { message: req.flash("message") });
+  });
+  apiRouter.get("/errorsignup", (req, res) => {
+    res.render("errorsignup", { message: req.flash("message") });
+  });
 
-  // // ruta solo de prueba no es pedido en ningun desafio
-  // apiRouter.get("/datos2", (req, res) => {
-  //   console.log(`port: ${PORT}`);
-  //   res.send(`servidor levantado en puerto ${srv.address().port}`);
-  // });
+  // ruta solo de prueba no es pedido en ningun desafio
+  apiRouter.get("/datos2", (req, res) => {
+    console.log(`port: ${PORT}`);
+    res.send(`servidor levantado en puerto ${srv.address().port}`);
+  });
 
-  // apiRouter.post("/login", async (req, res, next) => {
+  apiRouter.post("/login", async (req, res, next) => {
+    try {
+      if (!req.body.userName) {
+        throw new Error("Debe enviar un nombre de usuario");
+      }
+      req.session.user = req.body.userName;
+      req.session.save((err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          res.json(`Login correcto ${req.session.user}`);
+        }
+      });
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  apiRouter.post(
+    "/signin",
+    passport.authenticate("login", { failureRedirect: "/api/errorlogin" }),
+    (req, res) => {
+      req.session.username = req.body.username;
+      res.redirect("/api");
+    }
+  );
+
+  apiRouter.post(
+    "/signup",
+    passport.authenticate("signup", {
+      successRedirect: "/api",
+      failureRedirect: "/api/errorsignup",
+    })    
+  );
+
+  // apiRouter.post("/productos", async (req, res, next) => {
   //   try {
-  //     if (!req.body.userName) {
-  //       throw new Error("Debe enviar un nombre de usuario");
-  //     }
-  //     req.session.user = req.body.userName;
-  //     req.session.save((err) => {
-  //       if (err) {
-  //         console.log(err);
-  //       } else {
-  //         res.json(`Login correcto ${req.session.user}`);
-  //       }
-  //     });
-  //   } catch (error) {
-  //     next(error);
+  //     res.json(await apiProductos.popular(req.query.cant));
+  //   } catch (err) {
+  //     logger.error(err);
+  //     next(err);
   //   }
   // });
 
-  // apiRouter.post(
-  //   "/signin",
-  //   passport.authenticate("login", { failureRedirect: "/api/errorlogin" }),
-  //   (req, res) => {
-  //     req.session.username = req.body.username;
-  //     res.redirect("/api");
+  // apiRouter.put("/productos/:id", async (req, res, next) => {
+  //   try {
+  //     const producto = await productos
+  //       .getById(Number(req.params.id))
+  //       .then((res) => res);
+  //     if (!producto) {
+  //       throw new Error("Producto no encontrado");
+  //     }
+  //     await productos
+  //       .update(
+  //         Number(req.params.id),
+  //         req.body.title,
+  //         req.body.price,
+  //         req.body.thumbnail
+  //       )
+  //       .then((resolve) => {
+  //         res.json(resolve);
+  //       });
+  //   } catch (err) {
+  //     logger.error(err);
+  //     next(err);
   //   }
-  // );
+  // });
 
-  // apiRouter.post(
-  //   "/signup",
-  //   passport.authenticate("signup", {
-  //     successRedirect: "/api",
-  //     failureRedirect: "/api/errorsignup",
-  //   })    
-  // );
+  // apiRouter.delete("/productos/:id", async (req, res, next) => {
+  //   try {
+  //     const producto = await productos
+  //       .getById(Number(req.params.id))
+  //       .then((resolve) => resolve);
+  //     if (!producto) {
+  //       throw new Error("Producto no encontrado");
+  //     }
+  //     await productos.deleteById(Number(req.params.id)).then((resolve) => {
+  //       res.json(`${producto.title} se borro con éxito`);
+  //     });
+  //   } catch (err) {
+  //     logger.error(err);
+  //     next(err);
+  //   }
+  // });
+
 
 
   app.use((req, res, next) => {
@@ -358,6 +460,15 @@ if (cluster.isPrimary && PORT.m == "CLUSTER") {
       descripcion: `Ruta ${req.url} método ${req.method} no implementados`,
     });
   });
+
+
+
+  // apiRouter.get("/probando", cartRouter);
+
+
+
+
+
 
 
   function handleErrors(err, req, res, next) {
