@@ -21,3 +21,57 @@
       at model.Query.Query.cast (C:\github\backend\desafio16\node_modules\mongoose\lib\query.js:5357:12),
   valueType: 'string'
 }
+[2023-03-16T01:37:33.003] [ERROR] default - Error: productos validation failed: title: Path `title` is required.
+    at ValidationError.inspect (C:\github\backend\desafio16\node_modules\mongoose\lib\error\validation.js:50:26)
+    at formatValue (node:internal/util/inspect:782:19)
+    at inspect (node:internal/util/inspect:347:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2167:40)
+    at Object.format (node:internal/util/inspect:2021:10)
+    at basicLayout (C:\github\backend\desafio16\node_modules\log4js\lib\layouts.js:65:52)
+    at app (C:\github\backend\desafio16\node_modules\log4js\lib\appenders\file.js:98:23)
+    at C:\github\backend\desafio16\node_modules\log4js\lib\appenders\logLevelFilter.js:10:7
+    at C:\github\backend\desafio16\node_modules\log4js\lib\log4js.js:43:5
+    at Array.forEach (<anonymous>) {
+  errors: {
+    title: ValidatorError: Path `title` is required.
+        at validate (C:\github\backend\desafio16\node_modules\mongoose\lib\schematype.js:1346:13)
+        at SchemaString.SchemaType.doValidate (C:\github\backend\desafio16\node_modules\mongoose\lib\schematype.js:1330:7)
+        at C:\github\backend\desafio16\node_modules\mongoose\lib\document.js:2905:18
+        at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+      properties: [Object],
+      kind: 'required',
+      path: 'title',
+      value: undefined,
+      reason: undefined,
+      [Symbol(mongoose:validatorError)]: true
+    }
+  },
+  _message: 'productos validation failed'
+}
+[2023-03-16T01:38:55.476] [ERROR] default - Error: productos validation failed: title: Path `title` is required.
+    at ValidationError.inspect (C:\github\backend\desafio16\node_modules\mongoose\lib\error\validation.js:50:26)
+    at formatValue (node:internal/util/inspect:782:19)
+    at inspect (node:internal/util/inspect:347:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2167:40)
+    at Object.format (node:internal/util/inspect:2021:10)
+    at basicLayout (C:\github\backend\desafio16\node_modules\log4js\lib\layouts.js:65:52)
+    at app (C:\github\backend\desafio16\node_modules\log4js\lib\appenders\file.js:98:23)
+    at C:\github\backend\desafio16\node_modules\log4js\lib\appenders\logLevelFilter.js:10:7
+    at C:\github\backend\desafio16\node_modules\log4js\lib\log4js.js:43:5
+    at Array.forEach (<anonymous>) {
+  errors: {
+    title: ValidatorError: Path `title` is required.
+        at validate (C:\github\backend\desafio16\node_modules\mongoose\lib\schematype.js:1346:13)
+        at SchemaString.SchemaType.doValidate (C:\github\backend\desafio16\node_modules\mongoose\lib\schematype.js:1330:7)
+        at C:\github\backend\desafio16\node_modules\mongoose\lib\document.js:2905:18
+        at processTicksAndRejections (node:internal/process/task_queues:78:11) {
+      properties: [Object],
+      kind: 'required',
+      path: 'title',
+      value: undefined,
+      reason: undefined,
+      [Symbol(mongoose:validatorError)]: true
+    }
+  },
+  _message: 'productos validation failed'
+}

@@ -5,7 +5,8 @@ const productoService = ProductoService.getInstance();
 export async function getAll(req, res) {
   const products = await productoService.getAll();
   products
-    ? res.status(200).json(products)
+    ? //res.status(200).json(products)
+      res.render("productos", {products})
     : res
         .status(400)
         .json({ error: "there was a problem when trying to get the products" });
