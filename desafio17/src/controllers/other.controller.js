@@ -2,7 +2,7 @@ import os from "node:os";
 import { fork } from "child_process";
 
 const randomNumbersGeneratorFork = fork(
-  "./src/utils/functions/randomNumbersGenerator.js"
+  "./utils/functions/randomNumbersGenerator.js"
 );
 
 export async function getInfo(req, res) {
